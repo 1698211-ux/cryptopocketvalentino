@@ -1,11 +1,16 @@
 import hashlib
 import hmac
+import os
 import time
 from urllib.parse import parse_qsl, unquote
 
 from fastapi import Depends, HTTPException, Header
 
 from app.config import settings
+
+# When true, an empty X-Init-Data header returns user_id=0 instead of failing.
+# Set ALLOW_EMPTY_INIT_DATA=true in .env for local development only.
+_DEV_ALLOW_EMPTY = os.getenv("ALLOW_EMPTY_INIT_DATA", "false").lower() == "true"
 
 MAX_AGE_SECONDS = 3600  # reject initData older than 1 hour
 
@@ -63,5 +68,7 @@ def validate_init_data(init_data: str) -> int:
         raise HTTPException(status_code=401, detail="Missing user in initData")
 
 
-def get_user_id(x_init_data: str = Header(..., alias="X-Init-Data")) -> int:
+def get_user_id(x_init_data: str = Header("", alias="X-Init-Data")) -> int:
+    if not x_init_data and _DEV_ALLOW_EMPTY:
+        return 0
     return validate_init_data(x_init_data)
