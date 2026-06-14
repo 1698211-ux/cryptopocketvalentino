@@ -105,7 +105,7 @@ npm run build                   # прод-сборка в dist/
 
 - [x] 0. Каркас репозитория, git init
 - [x] 1. Backend: FastAPI + эндпоинт цен (CoinGecko)
-- [ ] 2. Bot: aiogram, /start с WebApp-кнопкой
+- [x] 2. Bot: aiogram, /start с WebApp-кнопкой
 - [ ] 3. Валидация initData + SQLite watchlist
 - [ ] 4. Frontend: оболочка, Telegram SDK, вкладки
 - [ ] 5. Фича Watchlist
