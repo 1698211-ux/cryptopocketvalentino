@@ -24,5 +24,5 @@ export const addCoin = (coinId) =>
 export const removeCoin = (coinId) =>
   apiFetch(`/api/watchlist/${coinId}`, { method: 'DELETE' })
 
-export const getPrices = (ids) =>
-  apiFetch(`/api/prices?ids=${ids.join(',')}`)
+export const getPrices = (ids, vsCurrency = 'usd') =>
+  apiFetch(`/api/prices?ids=${ids.join(',')}&vs_currency=${vsCurrency}`)
